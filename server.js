@@ -5,7 +5,9 @@ const morgan = require("morgan");
 const cors = require("cors");
 const compression = require("compression");
 
-dotenv.config({ path: "config.env" });
+//dotenv.config({ path: "config.env" });
+dotenv.config();
+//const { config } = require("process");
 const ApiError = require("./utils/apiError");
 const globalError = require("./middleware/errorMiddleware");
 const dbConnection = require("./config/database");
@@ -24,9 +26,9 @@ app.use(compression());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "uploads")));
 
-if (process.env.NONE_ENV === "development") {
+if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
-  console.log(`Mode: ${process.env.NONE_ENV}`);
+  console.log(`Mode: ${process.env.NODE_ENV}`);
 }
 //Mount Routes
 mountRoutes(app);
