@@ -6,7 +6,10 @@ const cors = require("cors");
 const compression = require("compression");
 
 //dotenv.config({ path: "config.env" });
-dotenv.config({ path: path.join(__dirname, "config.env") });
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config({ path: path.join(__dirname, "config.env") });
+}
+//dotenv.config({ path: path.join(__dirname, "config.env") });
 //dotenv.config();
 //const { config } = require("process");
 const ApiError = require("./utils/apiError");
