@@ -14,6 +14,7 @@ const globalError = require("./middleware/errorMiddleware");
 const dbConnection = require("./config/database");
 //Routes
 const mountRoutes = require("./routes/index");
+const { webhookCheckout } = require("./services/orderService");
 //connect with db;
 dbConnection();
 
@@ -23,6 +24,12 @@ app.use(cors()); // To enable the other domain to access your application
 // Compress all responses
 app.use(compression());
 
+//Checkout webhook
+app.post(
+  "/webhook-checkout",
+  express.raw({ type: "application/json" }),
+  webhookCheckout,
+);
 //Middlewares
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "uploads")));
