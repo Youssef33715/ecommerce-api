@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const cors = require("cors");
 const compression = require("compression");
-
+//Jooo
 //dotenv.config({ path: "config.env" });
 if (process.env.NODE_ENV !== "production") {
   dotenv.config({ path: path.join(__dirname, "config.env") });
