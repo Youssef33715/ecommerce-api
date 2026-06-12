@@ -36,10 +36,11 @@ exports.login = asyncHandler(async (req, res, next) => {
     //focus
     return next(new ApiError("Incorrect email or password", 401));
   }
+  const updatedUser = await User.findById(user._id);
   //3) Generate token
-  const token = createToken(user._id);
+  const token = createToken(updatedUser._id);
   //4) send response to client side
-  res.status(200).json({ data: user, token });
+  res.status(200).json({ data: updatedUser, token });
 });
 /////////////////
 // @ desc make sure the user is logged in
