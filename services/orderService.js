@@ -4,6 +4,7 @@ const factory = require("./handlersFactory");
 
 const ApiError = require("../utils/apiError");
 
+const User = require("../models/userModel");
 const Cart = require("../models/cartModel");
 const Product = require("../models/productModel");
 const Order = require("../models/orderModel");
@@ -146,6 +147,41 @@ exports.checkoutSession = asyncHandler(async (req, res, next) => {
   res.status(200).json({ status: `success`, session });
 });
 ///AT END PROJECT
+const createCardOrder = async (session) => {
+  const cartId = session.client_reference_id;
+  const shippingAddress = session.metadata;
+  const orderPrice = session.amount_total / 100;
+
+  const cart = await Cart.findById(cartId);
+  const user = await User.findOne({ email: session.customer_email });
+  // Create Order
+  const order = await Order.create({
+    user: user._id,
+    cartItems: cart.cartItems,
+    shippingAddress,
+    totalOrderPrice: orderPrice,
+    ispaid: true,
+    paidAt: Date.now(),
+    paymentMethodType: "card",
+  });
+  // 4) AfterCreating order,decrement product Quantity,increment product sold (Product Model)
+  if (order) {
+    const bulkOption = cart.cartItems.map((item) => ({
+      updateOne: {
+        filter: { _id: item.product || item.product },
+        update: {
+          $inc: { quantity: -item.quantity, sold: +item.quantity },
+        },
+      },
+    }));
+    await Product.bulkWrite(bulkOption, {});
+    // 5) Clear card depend on cardId
+    await Cart.findByIdAndDelete(cartId);
+  }
+};
+//@desc this webhook will run when stripe payment success paid
+// @route post /webwook-checkout
+// @access Protected/user
 exports.webhookCheckout = asyncHandler(async (req, res, next) => {
   const sig = req.headers["stripe-signature"];
 
@@ -160,6 +196,8 @@ exports.webhookCheckout = asyncHandler(async (req, res, next) => {
     return res.status(400).send(`webhook Error: ${err.message}`);
   }
   if (event.type === "checkout.session.completed") {
-    console.log("Created Order Here .....");
+    // Create order
+    await createCardOrder(event.data.object);
   }
+  res.status(200).json({ received: true });
 });
