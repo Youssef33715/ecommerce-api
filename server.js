@@ -4,7 +4,10 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const cors = require("cors");
 const compression = require("compression");
-//Jooo
+const rateLimit = require("express-rate-limit");
+const hpp = require("hpp");
+const helmet = require("helmet"); //
+
 //dotenv.config({ path: "config.env" });
 if (process.env.NODE_ENV !== "production") {
   dotenv.config({ path: path.join(__dirname, "config.env") });
@@ -23,6 +26,8 @@ dbConnection();
 
 //express app
 const app = express();
+app.use(helmet());
+
 app.use(cors()); // To enable the other domain to access your application
 // Compress all responses
 app.use(compression());
@@ -34,13 +39,36 @@ app.post(
   webhookCheckout,
 );
 //Middlewares
-app.use(express.json());
+app.use(express.json({ limit: "20kb" }));
 app.use(express.static(path.join(__dirname, "uploads")));
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
   console.log(`Mode: ${process.env.NODE_ENV}`);
 }
+//To apply data sanitization =>Secuirty
+//app.use(mongoSanitize());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+  message: "Too many account from this IP, please try again later.",
+});
+
+// Apply the rate limiting middleware to all requests.
+app.use("/api", limiter);
+app.use(
+  hpp({
+    whitelist: [
+      "price",
+      "sold",
+      "quantity",
+      "ratingsAverage",
+      "ratingsQuantity",
+    ],
+  }),
+); // <- middleware to protect against HTTP Parameter Pollution attacks
+
 //Mount Routes
 mountRoutes(app);
 /////////////

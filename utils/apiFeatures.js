@@ -21,12 +21,27 @@ class ApiFeatures {
     return this;
   }
 
+  // sort() {
+  //   if (this.queryString.sort) {
+  //     const sortBy = this.queryString.sort.split(",").join(" ");
+  //     this.mongooseQuery = this.mongooseQuery.sort(sortBy);
+  //   } else {
+  //     this.mongooseQuery = this.mongooseQuery.sort("-createAt");
+  //   }
+  //   return this;
+  // }
   sort() {
     if (this.queryString.sort) {
-      const sortBy = this.queryString.sort.split(",").join(" ");
+      // لو الـ sort جاي كـ Array (بسبب التكرار)، حوّله لـ String مفصول بمسافات
+      // لو جاي كـ String عادي، هيعمل split و join بشكل طبيعي
+      const sortBy =
+        typeof this.queryString.sort === "string"
+          ? this.queryString.sort.split(",").join(" ")
+          : this.queryString.sort.join(" "); // هنا لو Array هيعمل join للـ عناصر علطول
+
       this.mongooseQuery = this.mongooseQuery.sort(sortBy);
     } else {
-      this.mongooseQuery = this.mongooseQuery.sort("-createAt");
+      this.mongooseQuery = this.mongooseQuery.sort("-createdAt"); //
     }
     return this;
   }

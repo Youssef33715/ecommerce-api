@@ -7,6 +7,7 @@ const asyncHandler = require("express-async-handler");
 const ApiError = require("../utils/apiError");
 const sendEmail = require("../utils/sendEmail");
 const createToken = require("../utils/createToken");
+const { sanitizeUser } = require("../utils/sanitizeData");
 
 const User = require("../models/userModel");
 
@@ -22,7 +23,7 @@ exports.signup = asyncHandler(async (req, res, next) => {
   });
   //2- Generate token
   const token = createToken(user._id);
-  res.status(201).json({ data: user, token });
+  res.status(201).json({ data: sanitizeUser(user), token });
 });
 //@ desc Login
 //@ route Get /api/v1/auth/login
@@ -32,6 +33,7 @@ exports.login = asyncHandler(async (req, res, next) => {
   //1) check if password and email in the body (validation)
   // 2) check if user exist & check if password is correct
   const user = await User.findOne({ email: req.body.email });
+
   if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
     //focus
     return next(new ApiError("Incorrect email or password", 401));
@@ -39,8 +41,10 @@ exports.login = asyncHandler(async (req, res, next) => {
   const updatedUser = await User.findById(user._id);
   //3) Generate token
   const token = createToken(updatedUser._id);
+  //Delete password from response
+  delete updatedUser._doc.password;
   //4) send response to client side
-  res.status(200).json({ data: updatedUser, token });
+  res.status(200).json({ data: sanitizeUser(updatedUser), token });
 });
 /////////////////
 // @ desc make sure the user is logged in
