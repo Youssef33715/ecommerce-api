@@ -64,7 +64,7 @@ NODE_ENV=development
 PORT=8000
 
 #Database
-DB_URI=mongodb+srv://Fathymohamed11:<db_password>@cluster0.q1fuprp.mongodb.net/Ecommerce?retryWrites=true&w=majority&appName=Cluster0
+DB_URI=mongodb+srv://youssefmohamed:<db_password>@cluster0.q1fuprp.mongodb.net/Ecommerce?retryWrites=true&w=majority&appName=Cluster0
 DB_PASS=YOUR_DB_PASSWORD
 
 # Allow all origins (only for development)
