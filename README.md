@@ -1,273 +1,101 @@
-# 🚀 Ecommerce API
+# 🛍️ Node.js E-commerce API
 
-A production-ready RESTful E-commerce API built with Node.js, Express.js, MongoDB Atlas, and Stripe.
-
-This project provides a complete backend solution for modern e-commerce applications, including authentication, authorization, product management, shopping cart functionality, coupon management, wishlist features, order processing, and secure online payments using Stripe Checkout and Webhooks.
-
----
-
-## 📌 Features
-
-### 🔐 Authentication & Authorization
-- User Registration & Login
-- JWT Authentication
-- Protected Routes
-- Role-Based Access Control (User / Manager / Admin)
-- Forgot Password via Email
-- Reset Password Workflow
-- Password Encryption using bcrypt
-
-### 👥 User Management
-- Manage User Profiles
-- User Addresses
-- Wishlist Management
-- Admin User Management
-
-### 📦 Product Management
-- Create Products
-- Update Products
-- Delete Products
-- Get Single Product
-- Get All Products
-- Product Image Upload
-- Product Image Processing with Sharp
-
-### 📂 Categories & Subcategories
-- Full CRUD Operations
-- Nested Resources Support
-- Category-Subcategory Relationships
-
-### 🏷 Brand Management
-- Full CRUD Operations
-- Image Upload Support
-
-### ⭐ Reviews System
-- Add Reviews
-- Update Reviews
-- Delete Reviews
-- One Review Per User Restriction
-
-### ❤️ Wishlist
-- Add Product To Wishlist
-- Remove Product From Wishlist
-- Retrieve User Wishlist
-
-### 🛒 Shopping Cart
-- Add Product To Cart
-- Update Product Quantity
-- Remove Cart Items
-- Clear Cart
-- Calculate Total Price
-
-### 🎟 Coupon System
-- Create Coupons
-- Apply Discount Coupons
-- Automatic Price Recalculation
-
-### 📦 Orders Management
-- Cash Orders
-- Card Orders
-- Order Tracking
-- Payment Status Management
-- Delivery Status Management
-
-### 💳 Stripe Payment Integration
-- Stripe Checkout Session
-- Stripe Webhooks
-- Automatic Order Creation After Successful Payment
-- Secure Online Payments
+![Node.js](https://img.shields.io/badge/Node.js-18.x-green)
+![Express](https://img.shields.io/badge/Express-5.x-yellow)
+![MongoDB](https://img.shields.io/badge/MongoDB-8.x-brightgreen)
+![Stripe](https://img.shields.io/badge/Stripe-Payment-blue)
+![Redis](https://img.shields.io/badge/Redis-Caching-red)
+![Multer](https://img.shields.io/badge/Multer-FileUpload-purple)
+![Sharp](https://img.shields.io/badge/Sharp-ImageOptimization-orange)
+![Helmet](https://img.shields.io/badge/Helmet-Security-lightgrey)
+![JWT](https://img.shields.io/badge/JWT-Authentication-blue)
+![Bcrypt](https://img.shields.io/badge/Bcrypt-Hashing-red)
+![ExpressValidator](https://img.shields.io/badge/ExpressValidator-Validation-green)
+![Compression](https://img.shields.io/badge/Compression-Performance-blue)
+![CORS](https://img.shields.io/badge/CORS-CrossOrigin-brightgreen)
+![CookieParser](https://img.shields.io/badge/CookieParser-Cookies-darkgreen)
+![Morgan](https://img.shields.io/badge/Morgan-Logging-yellow)
+![UUID](https://img.shields.io/badge/UUID-UniqueID-purple)
+![Pluralize](https://img.shields.io/badge/Pluralize-Helpers-orange)
+![Nodemailer](https://img.shields.io/badge/Nodemailer-Emails-blue)
+![Slugify](https://img.shields.io/badge/Slugify-SEO-darkblue)
+![HPP](https://img.shields.io/badge/HPP-HTTPProtection-grey)
+![RateLimiter](https://img.shields.io/badge/RateLimiter-Security-red)
+![Nodemon](https://img.shields.io/badge/Nodemon-DevTool-teal)
 
 ---
 
-## 🛡 Security Features
+## 💡 Overview
 
-This project follows modern backend security best practices:
-
-- Helmet Security Headers
-- Rate Limiting
-- MongoDB Query Sanitization
-- XSS Protection
-- HTTP Parameter Pollution Protection (HPP)
-- JWT Authentication
-- Password Hashing (bcryptjs)
-- Global Error Handling
-- Unhandled Rejection Handling
-- Uncaught Exception Handling
-
----
-
-## 🏗 Tech Stack
-
-### Backend
-- Node.js
-- Express.js
-
-### Database
-- MongoDB Atlas
-- Mongoose ODM
-
-### Authentication
-- JWT
-- bcryptjs
-
-### Payments
-- Stripe Checkout
-- Stripe Webhooks
-
-### File Upload & Image Processing
-- Multer
-- Sharp
-
-### Validation
-- Express Validator
-
-### Security
-- Helmet
-- Express Rate Limit
-- Express Mongo Sanitize
-- HPP
-- XSS Clean
-
-### Deployment
-- Vercel
-- MongoDB Atlas
+* **Modular Architecture**: controllers, models, routes, services per module.
+* **Factory Handlers**: CRUD operations reusable across models.
+* **Rate Limiter Factory**: applied per sensitive endpoint.
+* **Validation**: all modules with Mongoose schema & custom validators.
+* **Plugins & Middlewares**: slugifyPlugin, imageUrlPlugin, preMiddlewares.
+* **Production Logging**: Morgan logs to files.
+* **JWT Authentication & Role-based Access Control**.
+* **File Uploads**: Multer + image optimization.
+* **Stripe Integration**: checkout sessions, webhook, order creation.
+* **Full E-commerce Features**: cart, wishlist, coupons, multi-address, orders, reviews.
+* **Products Caching with Redis**: top 10, latest, top-rated, related products are cached for performance.
 
 ---
 
-## 📂 Project Structure
+## 🚀 Quick Start
 
 ```bash
-├── config
-├── middleware
-├── models
-├── routes
-├── services
-├── uploads
-├── utils
-├── validators
-├── server.js
-```
-
----
-
-## ⚙ Environment Variables
-
-Create a `.env` file in the root directory and add:
-
-```env
-NODE_ENV=
-
-PORT=
-
-DB_URL=
-
-JWT_SECRET_KEY=
-JWT_EXPIRE_TIME=
-
-EMAIL_HOST=
-EMAIL_PORT=
-EMAIL_USER=
-EMAIL_PASSWORD=
-
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
-```
-
----
-
-## 🚀 Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/Youssef33715/ecommerce-api.git
-```
-
-Navigate to project directory:
-
-```bash
+# Clone repository
+git clone [https://github.com/Youssef33715/ecommerce-api.git](https://github.com/Youssef33715/ecommerce-api.git)
 cd ecommerce-api
-```
 
-Install dependencies:
-
-```bash
+# Install dependencies
 npm install
-```
 
-Create `.env` file and configure environment variables.
-
-Run development server:
-
-```bash
+# Run in development
 npm run start:dev
-```
 
-Run production server:
-
-```bash
+# Run in production
 npm run start:prod
-```
+🔧 Environment Variables (.env)The project requires a .env file in the root directory with the following variables:مقتطف الرمزNODE_ENV=development
+PORT=8000
 
----
+# Database
+DB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/dbname
+DB_PASS=YOUR_DB_PASSWORD
 
-## 📡 API Modules
+# Allow all origins (only for development)
+CLIENT_URL=*
 
-- Authentication
-- Users
-- Categories
-- Subcategories
-- Brands
-- Products
-- Reviews
-- Wishlist
-- Addresses
-- Cart
-- Coupons
-- Orders
-- Stripe Payments
+# BaseURL Image
+BASE_URL=http://localhost:8000
 
----
+# JWT
+JWT_SECRET_KEY=YOUR_JWT_SECRET_KEY
+JWT_EXPIRES_IN=15m
+JWT_REFRESH_SECRET_KEY=YOUR_JWT_REFRESH_SECRET
+JWT_REFRESH_EXPIRES_IN=7d
 
-## 🎯 Learning Outcomes
+# Email Settings
+EMAIL_HOST=smtp.ethereal.email
+EMAIL_PORT=587
+EMAIL_USER=YOUR_EMAIL_USER
+EMAIL_PASSWORD=YOUR_EMAIL_PASSWORD
+EMAIL_FROM_NAME=E-shop
+EMAIL_FROM=your_email@gmail.com
 
-Through building this project, I gained hands-on experience with:
+# Stripe Settings
+STRIPE_SECRET_KEY=YOUR_STRIPE_SECRET
+STRIPE_WEBHOOK_SECRET_KEY=YOUR_STRIPE_WEBHOOK_SECRET
 
-- RESTful API Design
-- Authentication & Authorization
-- MongoDB Data Modeling
-- Stripe Payment Integration
-- Stripe Webhooks
-- Backend Security Best Practices
-- Error Handling
-- File Upload & Image Processing
-- Deployment & Environment Management
-
----
-
-## 🔮 Future Improvements
-
-- API Documentation using Swagger
-- Refresh Tokens
-- Product Search Optimization
-- Caching with Redis
-- CI/CD Pipeline
-- Docker Support
-- Unit & Integration Testing
-
----
-
-## 👨‍💻 Author
-
-### Youssef Mohamed
-
-Computer Science & Artificial Intelligence Student
-
-Backend Developer | Future AI Engineer
-
-GitHub:
-https://github.com/Youssef33715
-
----
-
-⭐ If you found this project useful, consider giving it a star.
+# Redis settings
+REDIS_URL=YOUR_REDIS_URL
+🔐 JWT Authentication & Role-based Access ControlAccess Token:Short-lived (15 minutes)Used to access protected endpointsSent via header: Authorization: Bearer <access_token>Refresh Token:Long-lived (7 days)Used to get a new Access Token without loginSent to endpoint /auth/refresh-token to renew tokenRoles: Admin, Manager, UserControls access to sensitive endpoints: Users, Orders, Products, CouponsPro-level Notes:Tokens are encrypted with JWT_SECRET_KEY and JWT_REFRESH_SECRET_KEY.Refresh token can be stored in HttpOnly cookie or local storage.Full protection on all CRUD operations and sensitive models.Base URL: {{BASE_URL}}/api/v1 | Authentication: Bearer Token (JWT) | Total Endpoints: 90+🔐 Authentication & AuthorizationMethodEndpointDescriptionAccess / RolesPOST/auth/signupRegister new userPublicPOST/auth/loginLogin user, issue access & refresh tokensPublicPOST/auth/logoutLogout user, clear refresh token cookiePrivateGET/auth/refresh-tokenGet new access token using refresh tokenPrivatePOST/auth/password/forgotRequest password reset code via emailPublicPOST/auth/password/verifyVerify password reset codePublicPOST/auth/password/resetReset password using verified codePublicNote: AccessToken expires in 15m, RefreshToken expires in 7d, stored in httpOnly cookie.👤 UsersMethodEndpointDescriptionAccess / RolesGET/usersGet all usersAdminPOST/usersCreate new userAdminGET/users/meGet logged-in user profileUserPUT/users/meUpdate profileUserPUT/users/me/passwordChange passwordUserPUT/users/me/deactivateDeactivate my accountUserPUT/users/:id/deactivateDeactivate user by adminAdminPUT/users/:id/reactivateReactivate user by adminAdminPUT/users/:id/passwordChange user password by adminAdminGET/users/:idGet specific user by adminAdminPUT/users/:idUpdate user by adminAdminDELETE/users/:idDelete userAdmin📦 CategoriesMethodEndpointDescriptionAccess / RolesGET/categoriesGet all categoriesPublicPOST/categoriesCreate new categoryAdmin / ManagerGET/categories/:idGet category by IDPublicPUT/categories/:idUpdate categoryAdmin / ManagerDELETE/categories/:idDelete categoryAdminSubCategoriesMethodEndpointDescriptionAccess / RolesGET/subcategoriesGet all subcategoriesPublicPOST/subcategoriesCreate subcategoryAdmin / ManagerGET/subcategories/:idGet subcategory by IDPublicPUT/subcategories/:idUpdate subcategoryAdmin / ManagerDELETE/subcategories/:idDelete subcategoryAdminNested Routes:MethodEndpointDescriptionAccess / RolesGET/categories/:categoryId/subcategoriesGet subcategories for categoryPublicPOST/categories/:categoryId/subcategoriesCreate subcategory under categoryAdmin / Manager🏷️ BrandsMethodEndpointDescriptionAccess / RolesGET/brandsList all brandsPublicPOST/brandsCreate brandAdmin / ManagerGET/brands/:idGet brand by IDPublicPUT/brands/:idUpdate brandAdmin / ManagerDELETE/brands/:idDelete brandAdmin🛒 CartMethodEndpointDescriptionAccess / RolesGET/cartGet logged user's cartUserPOST/cartAdd product to cartUserPUT/cart/:itemIdUpdate cart item quantityUserDELETE/cart/:itemIdRemove cart itemUserDELETE/cart/clearClear entire cartUserPUT/cart/apply-couponApply couponUser🧾 OrdersMethodEndpointDescriptionAccess / RolesPOST/orders/:cartIdCreate cash orderUserGET/orders/meGet my ordersUserGET/orders/me/:idGet my order by IDUserGET/ordersGet all ordersAdmin / ManagerGET/orders/checkout-session/:cartIdStripe checkout sessionUserPUT/orders/:id/payMark order as paidAdmin / ManagerPUT/orders/:id/deliverMark order as deliveredAdmin / ManagerNote: Both Stripe checkout orders and cash orders use atomic order creation to prevent duplicates. Stripe uses stripeSessionId, and cash orders ensure uniqueness by validating cart contents and order records before creation.🛍️ ProductsMethodEndpointDescriptionAccess / RolesGET/productsGet all productsPublicGET/products/:idGet product by IDPublicPOST/productsCreate productAdmin / ManagerPUT/products/:idUpdate productAdmin / ManagerDELETE/products/:idDelete productAdminGET/products/top-tenTop 10 productsPublicGET/products/latestLatest productsPublicGET/products/top-ratedTop rated productsPublicGET/products/:id/relatedRelated productsPublic⭐ ReviewsMethodEndpointDescriptionAccess / RolesGET/reviewsGet all reviewsPublicGET/reviews/:idGet review by IDPublicPOST/products/:productId/reviewsCreate review for productUserGET/products/:productId/reviewsGet reviews for productPublicGET/products/:productId/reviews/:reviewIdGet specific review for productPublicPUT/reviews/:idUpdate reviewUserDELETE/reviews/:idDelete reviewUser / Admin💖 WishlistMethodEndpointDescriptionAccess / RolesGET/wishlistGet my wishlistUserPOST/wishlistAdd product to wishlistUserDELETE/wishlist/:productIdRemove from wishlistUser📍 AddressesMethodEndpointDescriptionAccess / RolesGET/addressesGet my addressesUserPOST/addressesAdd new addressUserDELETE/addresses/:addressIdRemove addressUser🎟️ CouponsMethodEndpointDescriptionAccess / RolesGET/couponsGet all couponsAdmin / ManagerPOST/couponsCreate couponAdmin / ManagerGET/coupons/:idGet coupon by IDAdmin / ManagerPUT/coupons/:idUpdate couponAdmin / ManagerDELETE/coupons/:idDelete couponAdminPATCH/coupons/activate/:idActivate couponAdminPATCH/coupons/deactivate/:idDeactivate couponAdmin💰 Pricing SettingsMethodEndpointDescriptionAccess / RolesGET/settingsGet pricing settingsAdminPUT/settingsUpdate pricing settingsAdmin✅ All endpoints follow JWT Authentication & Role-based Access Control.🔒 Refresh token & access token mechanism implemented for secure session handling.⚡ Stripe checkout & webhook handle atomic operations to prevent overselling.⚡ Stripe Webhook Integration (Local Testing)1️⃣ Run BackendBashnpm run start:dev
+2️⃣ Run Stripe CLIBashstripe listen --forward-to localhost:8000/webhook-checkout
+Connects Stripe to /webhook-checkout endpoint locally.3️⃣ Trigger Checkout SessionBashstripe trigger checkout.session.completed \
+  --add checkout_session:client_reference_id=<CART_ID> \
+  --add checkout_session:metadata[userId]=<USER_ID>
+Replace <CART_ID> and <USER_ID> with real database values.4️⃣ VerifyCheck console logs:BashCheckout Session Completed: cs_test_...
+Cart ID: ...
+User ID: ...
+Order created from Stripe webhook: ...
+Order is created, stock updated, cart cleared.Duplicate sessions ignored to prevent multiple orders.5️⃣ NotesLogs appear only in development mode.Transactions are atomic to prevent overselling.Webhook ready for production, use correct Stripe secret in .env.🏗️ Architecture & SkillsFactory Handlers for all CRUD operationsRate Limiter Factory reusable for any moduleValidation for all models & inputsPlugins: slugifyPlugin, imageUrlPluginPre-Middlewares & Model Methods for pre-save, pre-update, computed fieldsModular Project StructureProduction Logging with morgan and file streams🎯 Key Features✅ Authentication & SecurityJWT-based authentication with refresh tokensPassword reset via email verification codeAccount deactivation/reactivationRole-based access control (Admin, Manager, User)✅ Advanced Product ManagementMulti-image upload supportProduct variants (colors, sizes)Stock quantity trackingRelated products suggestionsTop-rated, latest, and top 10 products✅ E-commerce FeaturesShopping cart with coupon supportWishlist functionalityMultiple shipping addressesCash and online payment (Stripe)Order tracking and status management✅ Reviews & RatingsUser reviews on productsRating system (1-5 stars)Review ownership validation✅ Advanced QueryingPagination supportField selectionKeyword searchSorting (ascending/descending)Filtering by multiple criteria✅ Admin FeaturesComplete user managementCoupon management with activation/deactivationOrder status management (paid/delivered)Pricing settings (tax & shipping)Product, category, brand CRUD operations✅ File Upload SupportCategory imagesBrand logosProduct images (cover + gallery)User profile picturesMultipart/form-data handling
